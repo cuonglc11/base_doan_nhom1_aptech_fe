@@ -4,14 +4,13 @@ import {
   RouterProvider,
   createRouter,
 } from "@tanstack/react-router";
-import Home from "../page/Home";
 import MainLayout from "@layout/web/MainLayout";
+import { routerConfigWeb } from "./listRouter";
 
 const rootRouter = new RootRoute({
   component: () => <MainLayout />,
 });
-const routerConfig = [{ path: "/", component: Home }];
-const childRouteres = routerConfig.map(
+const childRouteres = routerConfigWeb.map(
   ({ path, component }) =>
     new Route({
       getParentRoute: () => rootRouter,
@@ -19,8 +18,10 @@ const childRouteres = routerConfig.map(
       component,
     })
 );
+console.log(childRouteres);
+
 const routeTree = rootRouter.addChildren(childRouteres);
-export const router = createRouter({ routeTree });
+const router = createRouter({ routeTree });
 export function AppRouterProvider() {
   return <RouterProvider router={router} />;
 }
